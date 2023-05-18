@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 import 'package:pengaduan_masyarakat_ver2/model/user.dart' as model;
 
@@ -25,6 +26,9 @@ class AuthMethod {
     String res = 'Some error occurred';
 
     try {
+      DateTime dateTime = DateTime.now();
+
+      String formattedDate = DateFormat('dd MMMM yyyy').format(dateTime);
       if (username.isNotEmpty &&
           email.isNotEmpty &&
           password.isNotEmpty &&
@@ -38,13 +42,12 @@ class AuthMethod {
         // Add user to DB
         String uid = credential.user!.uid;
         final user = model.User(
-          userid: uid,
-          uName: username,
-          email: email,
-          noTelp: noTelp,
-          role: "user",
-          createdAt: DateTime.now().toString(),
-        );
+            userid: uid,
+            uName: username,
+            email: email,
+            noTelp: noTelp,
+            role: "user",
+            createdAt: formattedDate);
         _firestore.collection('users').doc(uid).set(user.toJson());
 
         res = 'Success';

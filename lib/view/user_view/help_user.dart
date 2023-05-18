@@ -12,7 +12,7 @@ class _HelpUserState extends State<HelpUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 2,
+        elevation: 1,
         // backgroundColor: "#2E4053".toColor(),
         backgroundColor: Colors.white,
         title: const Text(

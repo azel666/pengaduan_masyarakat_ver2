@@ -18,7 +18,7 @@ class _RegisterState extends State<Register> {
   TextEditingController emailCon = TextEditingController();
   TextEditingController noTelpCon = TextEditingController();
   TextEditingController passwordCon = TextEditingController();
-  // bool? _isLoading;
+  bool? _isLoading;
 
   @override
   void dispose() {
@@ -268,7 +268,7 @@ class _RegisterState extends State<Register> {
               ),
               onPressed: () {
                 FirebaseAuth.instance.signOut();
-                Get.to(Login());
+                Get.offAll(const Login());
               },
             ),
           ],

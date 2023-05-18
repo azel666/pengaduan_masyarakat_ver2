@@ -197,9 +197,9 @@ class _LoginState extends State<Login> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         if (documentSnapshot.get('role') == "user") {
-          Get.off(DashboardUser());
+          Get.off(const DashboardUser());
         } else {
-          Get.off(DashboardAdmin());
+          Get.off(const DashboardAdmin());
         }
       } else {
         print('Document does not exist on the database');
