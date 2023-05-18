@@ -1,26 +1,24 @@
-import 'dart:typed_data';
-
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:uuid/uuid.dart';
+import 'package:image_picker/image_picker.dart';
 
 class StorageMethod {
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<String> uploadImageToStorage(
-      String childName, Uint8List file, bool isPost) async {
-    Reference ref =
-        _storage.ref().child(childName).child(_auth.currentUser!.uid);
+  Future<void> uploadImageToStorage(String imgUrl, XFile image) async {
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
 
-    if (isPost) {
-      String id = const Uuid().v1();
-      ref = ref.child(id);
+    Reference referenceRoot = _storage.ref();
+    Reference referenceDir = referenceRoot.child('aduan');
+    Reference referenceImageUpload = referenceDir.child(fileName);
+
+    try {
+      await referenceImageUpload.putFile(File(image.path));
+      imgUrl = await referenceImageUpload.getDownloadURL();
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      ;
     }
-
-    UploadTask uploadTask = ref.putData(file);
-    TaskSnapshot taskSnapshot = await uploadTask;
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-    return downloadUrl;
   }
 }

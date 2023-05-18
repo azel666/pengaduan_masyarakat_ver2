@@ -173,9 +173,7 @@ class _LoginState extends State<Login> {
       String res = await AuthMethod()
           .login(email: emailCon.text, password: passCon.text);
       if (res == 'Success') {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const DashboardUser()),
-            (route) => false);
+        route();
         setState(() {
           _isLoading = false;
         });
@@ -190,23 +188,25 @@ class _LoginState extends State<Login> {
     }
   }
 
-  // void route() {
-  //   User? user = FirebaseAuth.instance.currentUser;
-  //   FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(user!.uid)
-  //       .get()
-  //       .then((DocumentSnapshot documentSnapshot) {
-  //     if (documentSnapshot.exists) {
-  //       if (documentSnapshot.get('role') == "user") {
-  //         Get.off(DashboardUser());
-  //       } else {
-  //         Get.off(DashboardAdmin());
-  //       }
-  //     } else {
-  //       print('Document does not exist on the database');
-  //     }
-  //   });
+  void route() {
+    User? user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        if (documentSnapshot.get('role') == "user") {
+          Get.off(DashboardUser());
+        } else {
+          Get.off(DashboardAdmin());
+        }
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
+  }
+
   void loginFailed() {
     showDialog(
       context: context,

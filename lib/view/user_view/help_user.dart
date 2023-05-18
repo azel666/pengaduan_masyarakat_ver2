@@ -11,9 +11,30 @@ class _HelpUserState extends State<HelpUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 2,
+        // backgroundColor: "#2E4053".toColor(),
+        backgroundColor: Colors.white,
+        title: const Text(
+          'FAQ',
+          style: TextStyle(
+            fontSize: 25,
+            fontFamily: 'Poppins',
+            color: Color(0xFF2E4053),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: Container(
-        child: Center(child: Text('PAGE HELP')),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Colors.white,
+        child: content(),
       ),
     );
+  }
+
+  Widget content() {
+    return Container();
   }
 }

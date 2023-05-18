@@ -47,20 +47,25 @@ class _TambahAduanState extends State<TambahAduan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        title: Text(
+        iconTheme: const IconThemeData(
+          color: Color(0xFF2E4053),
+        ),
+        elevation: 2,
+        title: const Text(
           'Tambah Aduan',
           style: TextStyle(
             fontFamily: 'Poppins',
             fontWeight: FontWeight.bold,
+            color: Color(0xFF2E4053),
           ),
         ),
-        backgroundColor: "#34495E".toColor(),
+        // backgroundColor: "#34495E".toColor(),
+        backgroundColor: Colors.white,
       ),
       resizeToAvoidBottomInset: false,
       body: Container(
-        padding: EdgeInsets.all(15.0),
-        color: "#212F3C".toColor(),
+        padding: const EdgeInsets.all(15.0),
+        // color: "#212F3C".toColor(),
         child: Center(
           child: content(),
         ),
@@ -165,8 +170,9 @@ class _TambahAduanState extends State<TambahAduan> {
                       if (pickedDate != null) {
                         print(
                             pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate =
-                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                        String formattedDate = DateFormat(
+                          'dd MMMM yyyy',
+                        ).format(pickedDate);
                         print(
                             formattedDate); //formatted date output using intl package =>  2021-03-16
                         setState(() {

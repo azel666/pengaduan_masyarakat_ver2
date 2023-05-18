@@ -5,8 +5,8 @@ import 'package:pengaduan_masyarakat_ver2/view/user_view/help_user.dart';
 import 'package:pengaduan_masyarakat_ver2/view/user_view/profile_user.dart';
 
 List<Widget> dashboardItems = [
-  FeedUser(),
-  FeedbackUser(),
-  HelpUser(),
-  ProfileUser()
+  const FeedUser(),
+  const FeedbackUser(),
+  const HelpUser(),
+  const ProfileUser()
 ];
