@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pengaduan_masyarakat_ver2/shared/my_color.dart';
+import 'package:pengaduan_masyarakat_ver2/view/admin_view/feed_admin.dart';
 
 class DashboardAdmin extends StatefulWidget {
   const DashboardAdmin({super.key});
@@ -17,83 +18,98 @@ class _DashboardAdminState extends State<DashboardAdmin> {
     });
   }
 
+  Future<bool> onBackPressed() {
+    if (_selected_index != 0) {
+      setState(() {
+        _selected_index = 0;
+      });
+      return Future.value(false); // Tidak tindak lanjuti navigasi kembali
+    }
+    return Future.value(true); // Tindak lanjuti navigasi kembali
+  }
+
   final pages = [
-    Text('111111111'),
+    const FeedAdmin(),
     Text('1112222222'),
     Text('1133333333'),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      extendBody: true,
-      bottomNavigationBar: SafeArea(
-        minimum: EdgeInsets.only(bottom: 5),
-        child: Container(
-          padding: EdgeInsets.all(12),
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-              color: "#2E4053".toColor().withOpacity(0.8),
-              borderRadius: BorderRadius.circular(25)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(
-                height: 40,
-                width: 40,
-                child: IconButton(
-                  padding: EdgeInsets.only(right: 20),
-                  onPressed: () {
-                    _updated_index(0);
-                  },
-                  icon: Icon(
-                    Icons.home,
-                    color: _selected_index == 0
-                        ? Colors.white
-                        : "#99A3A4".toColor(),
-                    size: 30,
+    return WillPopScope(
+      onWillPop: onBackPressed,
+      child: Scaffold(
+        extendBody: true,
+        bottomNavigationBar: SafeArea(
+          minimum: EdgeInsets.only(bottom: 5),
+          child: Container(
+            padding: EdgeInsets.all(12),
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+                color: "#2E4053".toColor().withOpacity(0.8),
+                borderRadius: BorderRadius.circular(25)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: IconButton(
+                    padding: EdgeInsets.only(right: 20),
+                    onPressed: () {
+                      _updated_index(0);
+                    },
+                    icon: Icon(
+                      Icons.home,
+                      color: _selected_index == 0
+                          ? Colors.white
+                          : "#99A3A4".toColor(),
+                      size: 30,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 40,
-                width: 40,
-                child: IconButton(
-                  onPressed: () {
-                    _updated_index(1);
-                  },
-                  icon: Icon(
-                    Icons.feedback,
-                    color: _selected_index == 1
-                        ? Colors.white
-                        : "#99A3A4".toColor(),
-                    size: 25,
+                SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: IconButton(
+                    onPressed: () {
+                      _updated_index(1);
+                    },
+                    icon: Icon(
+                      Icons.feedback,
+                      color: _selected_index == 1
+                          ? Colors.white
+                          : "#99A3A4".toColor(),
+                      size: 25,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 40,
-                width: 40,
-                child: IconButton(
-                  padding: EdgeInsets.only(left: 10),
-                  onPressed: () {
-                    _updated_index(2);
-                  },
-                  icon: Icon(
-                    Icons.person,
-                    color: _selected_index == 2
-                        ? Colors.white
-                        : "#99A3A4".toColor(),
-                    size: 30,
+                SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: IconButton(
+                    padding: EdgeInsets.only(left: 10),
+                    onPressed: () {
+                      _updated_index(2);
+                    },
+                    icon: Icon(
+                      Icons.person,
+                      color: _selected_index == 2
+                          ? Colors.white
+                          : "#99A3A4".toColor(),
+                      size: 30,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
+        body: IndexedStack(
+          index: _selected_index,
+          children: pages,
+        ),
       ),
-      body: pages.elementAt(_selected_index),
     );
   }
 }

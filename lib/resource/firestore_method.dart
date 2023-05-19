@@ -1,10 +1,12 @@
 import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:pengaduan_masyarakat_ver2/model/aduan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pengaduan_masyarakat_ver2/model/user.dart';
 
 class FirestoreMethod {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  //add data aduan ke firestore
   Future<String> addAduan(
       String judul,
       String deskripsi,
@@ -13,7 +15,6 @@ class FirestoreMethod {
       String imageUrl,
       String datePublished,
       String userid) async {
-    // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
       final col = _firestore.collection('aduan');
@@ -39,6 +40,21 @@ class FirestoreMethod {
     return res;
   }
 
+  //update user
+  Future<void> updateUser(
+    String userid,
+    String username,
+    String email,
+    String noTelp,
+  ) async {
+    await FirebaseFirestore.instance.collection('users').doc(userid).update({
+      "username": username,
+      "email": email,
+      "noTelp": noTelp,
+    });
+  }
+
+  //delete data aduan firestore storage
   Future<void> deleteData(String imageUrl, String aduanid) async {
     try {
       FirebaseFirestore.instance.collection('aduan').doc(aduanid).delete();
@@ -47,5 +63,27 @@ class FirestoreMethod {
     } catch (e) {
       print(e);
     }
+  }
+
+  //admin verfication
+  Future<void> addCheckProgess1(String aduanid, bool progress1) async {
+    await FirebaseFirestore.instance
+        .collection("aduan")
+        .doc(aduanid)
+        .update({'progress1': progress1});
+  }
+
+  Future<void> addCheckProgess2(String aduanid, bool progress2) async {
+    await FirebaseFirestore.instance
+        .collection("aduan")
+        .doc(aduanid)
+        .update({'progress2': progress2});
+  }
+
+  Future<void> addCheckProgess3(String aduanid, bool progress3) async {
+    await FirebaseFirestore.instance
+        .collection("aduan")
+        .doc(aduanid)
+        .update({'progress3': progress3});
   }
 }

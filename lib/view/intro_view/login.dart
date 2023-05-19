@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pengaduan_masyarakat_ver2/resource/auth_method.dart';
+import 'package:pengaduan_masyarakat_ver2/resource/firestore_method.dart';
 import 'package:pengaduan_masyarakat_ver2/shared/my_color.dart';
 import 'package:pengaduan_masyarakat_ver2/view/admin_view/dashboard_admin.dart';
 import 'package:pengaduan_masyarakat_ver2/view/intro_view/register.dart';
@@ -188,6 +189,7 @@ class _LoginState extends State<Login> {
     }
   }
 
+  // rute login
   void route() {
     User? user = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance

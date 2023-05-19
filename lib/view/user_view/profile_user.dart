@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:pengaduan_masyarakat_ver2/view/intro_view/login.dart';
+import 'package:pengaduan_masyarakat_ver2/view/user_view/edit_profile.dart';
 
 class ProfileUser extends StatefulWidget {
   const ProfileUser({super.key});
@@ -59,9 +60,8 @@ class _ProfileUserState extends State<ProfileUser> {
                 ),
               ),
               onSelected: (value) {
-                // Lakukan sesuatu berdasarkan item yang dipilih
                 if (value == 'edit_profile') {
-                  // Tindakan untuk Edit Profile
+                  Get.to(EditProfile());
                 } else if (value == 'logout') {
                   logout();
                 }
@@ -217,7 +217,7 @@ class _ProfileUserState extends State<ProfileUser> {
                       Row(
                         children: [
                           const Icon(
-                            Icons.phone,
+                            Icons.phone_outlined,
                             color: Color(0xFF2E4053),
                             size: 30,
                           ),

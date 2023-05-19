@@ -1,27 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pengaduan_masyarakat_ver2/shared/my_color.dart';
 import 'package:pengaduan_masyarakat_ver2/view/user_view/feed_detail.dart';
+import 'package:pengaduan_masyarakat_ver2/view/admin_view/verification_admin.dart';
 
-class FeedCard extends StatelessWidget {
+class FeedCard extends StatefulWidget {
   final listAllDocument;
   const FeedCard({Key? key, required this.listAllDocument}) : super(key: key);
 
   @override
+  State<FeedCard> createState() => _FeedCardState();
+}
+
+class _FeedCardState extends State<FeedCard> {
+  @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: listAllDocument.length,
+      itemCount: widget.listAllDocument.length,
       itemBuilder: (BuildContext context, int index) => Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
         child: Column(
           children: [
             InkWell(
               onTap: () {
-                var detail =
-                    listAllDocument[index].data() as Map<String, dynamic>;
-
-                Get.to(FeedDetail(detail: detail));
+                var detail = widget.listAllDocument[index].data()
+                    as Map<String, dynamic>;
+                getData(detail);
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -51,7 +58,7 @@ class FeedCard extends StatelessWidget {
                       height: 23,
                       width: double.infinity,
                       child: Text(
-                        "${(listAllDocument[index].data() as Map<String, dynamic>)["username"]}",
+                        "${(widget.listAllDocument[index].data() as Map<String, dynamic>)["username"]}",
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.bold,
@@ -66,7 +73,7 @@ class FeedCard extends StatelessWidget {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: Image.network(
-                                      '${(listAllDocument[index].data() as Map<String, dynamic>)["imageUrl"]}')
+                                      '${(widget.listAllDocument[index].data() as Map<String, dynamic>)["imageUrl"]}')
                                   .image)),
                     ),
                     Padding(
@@ -75,7 +82,7 @@ class FeedCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${(listAllDocument[index].data() as Map<String, dynamic>)["judul"]}",
+                            "${(widget.listAllDocument[index].data() as Map<String, dynamic>)["judul"]}",
                             style: TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
@@ -83,14 +90,14 @@ class FeedCard extends StatelessWidget {
                             maxLines: 1,
                           ),
                           Text(
-                            "${(listAllDocument[index].data() as Map<String, dynamic>)["deskripsi"]}",
+                            "${(widget.listAllDocument[index].data() as Map<String, dynamic>)["deskripsi"]}",
                             style: TextStyle(
                                 fontSize: 16.0, fontFamily: 'Poppins'),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            "${(listAllDocument[index].data() as Map<String, dynamic>)["lokasi"]}",
+                            "${(widget.listAllDocument[index].data() as Map<String, dynamic>)["lokasi"]}",
                             style: TextStyle(
                                 fontSize: 14.0,
                                 fontFamily: 'Poppins',
@@ -103,7 +110,7 @@ class FeedCard extends StatelessWidget {
                             children: [
                               Text(""),
                               Text(
-                                  "${(listAllDocument[index].data() as Map<String, dynamic>)["datePublished"]}",
+                                  "${(widget.listAllDocument[index].data() as Map<String, dynamic>)["datePublished"]}",
                                   style: TextStyle(
                                       fontSize: 13.0, fontFamily: 'Poppins'),
                                   maxLines: 1),
@@ -120,5 +127,26 @@ class FeedCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void getData(var detail) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .get()
+          .then((snap) {
+        if (snap.exists) {
+          if (snap.get('role') == 'user') {
+            Get.to(FeedDetail(detail: detail));
+          } else if (snap.get('role') == 'admin') {
+            Get.to(VerificationAdmin(detail: detail));
+          }
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }

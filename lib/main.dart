@@ -13,7 +13,7 @@ Future<void> main() async {
 
   runApp(
     GetMaterialApp(
-      darkTheme: ThemeData(brightness: Brightness.dark),
+      theme: ThemeData(unselectedWidgetColor: Colors.white),
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
     ),
