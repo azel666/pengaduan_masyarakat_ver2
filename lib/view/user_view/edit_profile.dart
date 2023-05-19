@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pengaduan_masyarakat_ver2/resource/firestore_method.dart';
+import 'package:pengaduan_masyarakat_ver2/resource/storage_method.dart';
+import 'package:pengaduan_masyarakat_ver2/utils/utils.dart';
 import 'package:pengaduan_masyarakat_ver2/view/user_view/profile_user.dart';
 
 class EditProfile extends StatefulWidget {
@@ -18,6 +23,21 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController uName = TextEditingController();
   TextEditingController uEmail = TextEditingController();
   TextEditingController uPhone = TextEditingController();
+
+  // XFile? _img;
+  String imageUrl = "";
+
+  File? newImage;
+
+  void changeProfilePhoto() async {
+    final imageFile = await getImageFromGallery();
+    if (imageFile != null) {
+      setState(() {
+        newImage = imageFile;
+      });
+      StorageMethod().updateProfilePhoto(newImage!);
+    }
+  }
 
   @override
   void initState() {
@@ -56,16 +76,23 @@ class _EditProfileState extends State<EditProfile> {
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40),
       child: Column(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
               radius: 70.0,
               backgroundColor: Colors.grey,
-              backgroundImage: AssetImage('assets/images/default_user.png')
-              // backgroundImage: uImage == null
-              //     ? Image.asset("assets/images/test.jpg").image
-              //     : Image.network(uImage!).image,
-              ),
+              backgroundImage: imageUrl == ""
+                  ? AssetImage('assets/images/default_user.png')
+                  : Image.network(imageUrl).image),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              // final ImagePicker _picker = ImagePicker();
+              // XFile? img = await _picker.pickImage(source: ImageSource.gallery);
+              // if (img != null) {
+              //   setState(() {
+              //     _img = img;
+              //   });
+              // }
+              changeProfilePhoto();
+            },
             child: Icon(Icons.camera_alt),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
@@ -157,6 +184,7 @@ class _EditProfileState extends State<EditProfile> {
           uName.text = username;
           uEmail.text = email;
           uPhone.text = phone;
+          imageUrl = snap.get('imageUrl');
         });
       }
     });

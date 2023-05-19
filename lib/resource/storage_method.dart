@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,5 +20,24 @@ class StorageMethod {
     } on FirebaseAuthException catch (e) {
       print(e.message);
     }
+  }
+
+  //update foto
+  void updateProfilePhoto(File newImage) async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    // Unggah foto ke Firebase Storage
+    final storageRef = await FirebaseStorage.instance
+        .ref()
+        .child('profile_photos/${user!.uid}.jpg');
+    await storageRef.putFile(newImage);
+
+    // Dapatkan URL foto yang diunggah
+    final imageUrl = await storageRef.getDownloadURL();
+
+    // Perbarui URL foto di Firestore
+    FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+      'imageUrl': imageUrl,
+    });
   }
 }

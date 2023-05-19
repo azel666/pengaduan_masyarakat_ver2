@@ -1,8 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:pengaduan_masyarakat_ver2/model/aduan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pengaduan_masyarakat_ver2/model/user.dart';
 
 class FirestoreMethod {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -47,11 +47,17 @@ class FirestoreMethod {
     String email,
     String noTelp,
   ) async {
-    await FirebaseFirestore.instance.collection('users').doc(userid).update({
-      "username": username,
-      "email": email,
-      "noTelp": noTelp,
-    });
+    final user = FirebaseAuth.instance.currentUser;
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(userid).update({
+        "username": username,
+        "email": email,
+        "noTelp": noTelp,
+      });
+      await user!.updateEmail(email);
+    } catch (e) {
+      print(e);
+    }
   }
 
   //delete data aduan firestore storage

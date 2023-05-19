@@ -17,7 +17,7 @@ class _ProfileUserState extends State<ProfileUser> {
   String? uName = "";
   String? uEmail = "";
   String? uPhone = "";
-  String? uImage = "";
+  String uImage = "";
 
   @override
   void initState() {
@@ -122,14 +122,12 @@ class _ProfileUserState extends State<ProfileUser> {
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40),
       child: Column(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
               radius: 70.0,
               backgroundColor: Colors.grey,
-              backgroundImage: AssetImage('assets/images/default_user.png')
-              // backgroundImage: uImage == null
-              //     ? Image.asset("assets/images/test.jpg").image
-              //     : Image.network(uImage!).image,
-              ),
+              backgroundImage: uImage == ""
+                  ? AssetImage('assets/images/default_user.png')
+                  : Image.network(uImage).image),
           Container(
             padding: const EdgeInsets.only(
               top: 50,
@@ -265,7 +263,7 @@ class _ProfileUserState extends State<ProfileUser> {
           uName = snapshot.data()!['username'];
           uEmail = snapshot.data()!['email'];
           uPhone = snapshot.data()!['noTelp'];
-          uImage = snapshot.data()!['image'];
+          uImage = snapshot.data()!['imageUrl'];
         });
       }
     });
