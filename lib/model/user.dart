@@ -7,6 +7,7 @@ class User {
   String noTelp;
   String role;
   String createdAt;
+  String imageUrl;
 
   User(
       {required this.userid,
@@ -14,7 +15,8 @@ class User {
       required this.email,
       required this.noTelp,
       required this.role,
-      required this.createdAt});
+      required this.createdAt,
+      required this.imageUrl});
 
   static User fromSnapshot(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
@@ -26,6 +28,7 @@ class User {
       noTelp: snapshot['noTelp'],
       role: snapshot['role'],
       createdAt: snapshot['createdAt'],
+      imageUrl: snapshot['imageUrl'],
     );
   }
 
@@ -35,6 +38,7 @@ class User {
         "email": email,
         "noTelp": noTelp,
         "role": role,
-        'createdAt': createdAt
+        "createdAt": createdAt,
+        "imageUrl": imageUrl,
       };
 }

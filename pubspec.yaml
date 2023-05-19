@@ -48,6 +48,7 @@ dependencies:
   intl:
   uuid:
   provider:
+  pull_to_refresh:
 
 dev_dependencies:
   flutter_test:

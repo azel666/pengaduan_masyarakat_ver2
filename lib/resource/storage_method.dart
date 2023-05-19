@@ -18,7 +18,6 @@ class StorageMethod {
       imgUrl = await referenceImageUpload.getDownloadURL();
     } on FirebaseAuthException catch (e) {
       print(e.message);
-      ;
     }
   }
 }

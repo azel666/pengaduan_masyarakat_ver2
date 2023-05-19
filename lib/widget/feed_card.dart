@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pengaduan_masyarakat_ver2/shared/my_color.dart';
+import 'package:pengaduan_masyarakat_ver2/view/user_view/feed_detail.dart';
 
 class FeedCard extends StatelessWidget {
   final listAllDocument;
@@ -16,14 +18,10 @@ class FeedCard extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                // var detail =
-                //     listAllDocument[index].data() as Map<String, dynamic>;
+                var detail =
+                    listAllDocument[index].data() as Map<String, dynamic>;
 
-                // Route route = MaterialPageRoute(
-                //     builder: (context) => detail_view(
-                //           detail: detail,
-                //         ));
-                // Navigator.push(context, route);
+                Get.to(FeedDetail(detail: detail));
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,

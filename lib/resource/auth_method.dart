@@ -47,7 +47,8 @@ class AuthMethod {
             email: email,
             noTelp: noTelp,
             role: "user",
-            createdAt: formattedDate);
+            createdAt: formattedDate,
+            imageUrl: "");
         _firestore.collection('users').doc(uid).set(user.toJson());
 
         res = 'Success';

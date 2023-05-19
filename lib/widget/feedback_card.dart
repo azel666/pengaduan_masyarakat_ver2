@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pengaduan_masyarakat_ver2/view/user_view/feedback_detail.dart';
 
 class FeedbackCard extends StatelessWidget {
   final listAllDocs;
@@ -15,13 +17,8 @@ class FeedbackCard extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                // var detail = listAllDocs[index].data() as Map<String, dynamic>;
-
-                // Route route = MaterialPageRoute(
-                //     builder: (context) => detail_feedback(
-                //           detail: detail,
-                //         ));
-                // Navigator.push(context, route);
+                var detail = listAllDocs[index].data() as Map<String, dynamic>;
+                Get.to(FeedbackDetail(detail: detail));
               },
               child: Container(
                 padding: EdgeInsets.fromLTRB(5, 10, 0, 10),
@@ -97,7 +94,7 @@ class FeedbackCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(""),
-                              listAllDocs[index].data()['progres 1'] != ""
+                              listAllDocs[index].data()['progress1'] != false
                                   ? Row(
                                       children: [
                                         Text("Verified",
@@ -112,7 +109,7 @@ class FeedbackCard extends StatelessWidget {
                                         )
                                       ],
                                     )
-                                  : Container(),
+                                  : Text(""),
                             ],
                           ),
                         )

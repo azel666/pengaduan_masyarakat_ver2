@@ -123,12 +123,13 @@ class _ProfileUserState extends State<ProfileUser> {
       child: Column(
         children: [
           const CircleAvatar(
-            radius: 70.0,
-            backgroundColor: Colors.grey,
-            // backgroundImage: uImage == null
-            //     ? Image.asset("assets/images/test.jpg").image
-            //     : Image.network(uImage!).image,
-          ),
+              radius: 70.0,
+              backgroundColor: Colors.grey,
+              backgroundImage: AssetImage('assets/images/default_user.png')
+              // backgroundImage: uImage == null
+              //     ? Image.asset("assets/images/test.jpg").image
+              //     : Image.network(uImage!).image,
+              ),
           Container(
             padding: const EdgeInsets.only(
               top: 50,
@@ -155,7 +156,7 @@ class _ProfileUserState extends State<ProfileUser> {
                         Text(
                           uName!,
                           style: const TextStyle(
-                            color: Color(0xFF2E4053),
+                            color: Colors.black,
                             fontFamily: 'Poppins',
                             fontSize: 18,
                           ),
@@ -190,7 +191,7 @@ class _ProfileUserState extends State<ProfileUser> {
                           Text(
                             uEmail!,
                             style: const TextStyle(
-                              color: Color(0xFF2E4053),
+                              color: Colors.black,
                               fontSize: 18,
                               fontFamily: 'Poppins',
                             ),
@@ -226,7 +227,7 @@ class _ProfileUserState extends State<ProfileUser> {
                           Text(
                             uPhone!,
                             style: const TextStyle(
-                              color: Color(0xFF2E4053),
+                              color: Colors.black,
                               fontSize: 17,
                               fontFamily: 'Poppins',
                             ),

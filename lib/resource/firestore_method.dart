@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:pengaduan_masyarakat_ver2/model/aduan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -18,19 +19,33 @@ class FirestoreMethod {
       final col = _firestore.collection('aduan');
       final doc = col.doc();
       Aduan aduan = Aduan(
-          aduanid: doc.id,
-          judul: judul,
-          deskripsi: deskripsi,
-          imageUrl: imageUrl,
-          lokasi: lokasi,
-          uName: username,
-          datePublished: datePublished,
-          userid: userid);
+        aduanid: doc.id,
+        judul: judul,
+        deskripsi: deskripsi,
+        imageUrl: imageUrl,
+        lokasi: lokasi,
+        uName: username,
+        datePublished: datePublished,
+        userid: userid,
+        progress1: false,
+        progress2: false,
+        progress3: false,
+      );
       _firestore.collection('aduan').doc(doc.id).set(aduan.toJson());
       res = "Success";
     } catch (err) {
       res = err.toString();
     }
     return res;
+  }
+
+  Future<void> deleteData(String imageUrl, String aduanid) async {
+    try {
+      FirebaseFirestore.instance.collection('aduan').doc(aduanid).delete();
+      Reference ref = FirebaseStorage.instance.refFromURL(imageUrl);
+      ref.delete();
+    } catch (e) {
+      print(e);
+    }
   }
 }
