@@ -116,7 +116,7 @@ class _LoginState extends State<Login> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all("#6495ED".toColor()),
+                            MaterialStateProperty.all(Color(0xFF2E4053)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(

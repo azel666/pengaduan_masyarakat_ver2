@@ -23,8 +23,11 @@ class StorageMethod {
   }
 
   //update foto
-  void updateProfilePhoto(File newImage) async {
+  void updateProfilePhoto(File newImage, String previousImageUrl) async {
     User? user = FirebaseAuth.instance.currentUser;
+
+    //delete previous foto
+    deletePreviousPhoto(previousImageUrl);
 
     // Unggah foto ke Firebase Storage
     final storageRef = await FirebaseStorage.instance
@@ -39,5 +42,13 @@ class StorageMethod {
     FirebaseFirestore.instance.collection('users').doc(user.uid).update({
       'imageUrl': imageUrl,
     });
+  }
+
+  //delete update previous foto
+  void deletePreviousPhoto(String previousImageUrl) async {
+    if (previousImageUrl.isNotEmpty) {
+      final storageRef = FirebaseStorage.instance.refFromURL(previousImageUrl);
+      await storageRef.delete();
+    }
   }
 }

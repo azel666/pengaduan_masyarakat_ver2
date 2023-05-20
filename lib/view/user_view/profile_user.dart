@@ -290,6 +290,9 @@ class _ProfileUserState extends State<ProfileUser> {
           ),
           actions: <Widget>[
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
+              ),
               child: const Text(
                 'Ya',
                 style: TextStyle(
@@ -304,6 +307,9 @@ class _ProfileUserState extends State<ProfileUser> {
               },
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
+              ),
               child: const Text(
                 'Tidak',
                 style: TextStyle(

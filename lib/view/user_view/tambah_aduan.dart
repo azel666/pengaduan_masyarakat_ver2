@@ -351,6 +351,9 @@ class _TambahAduanState extends State<TambahAduan> {
           ),
           actions: <Widget>[
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
+              ),
               child: Text(
                 'OK',
                 style: TextStyle(

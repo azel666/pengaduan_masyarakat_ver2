@@ -127,7 +127,7 @@ class _RegisterState extends State<Register> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all("#6495ED".toColor()),
+                          MaterialStateProperty.all(Color(0xFF2E4053)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
@@ -221,6 +221,9 @@ class _RegisterState extends State<Register> {
           ),
           actions: <Widget>[
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
+              ),
               child: Text(
                 'OK',
                 style: TextStyle(
@@ -259,6 +262,9 @@ class _RegisterState extends State<Register> {
           ),
           actions: <Widget>[
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
+              ),
               child: Text(
                 'OK',
                 style: TextStyle(

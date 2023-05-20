@@ -29,16 +29,6 @@ class _EditProfileState extends State<EditProfile> {
 
   File? newImage;
 
-  void changeProfilePhoto() async {
-    final imageFile = await getImageFromGallery();
-    if (imageFile != null) {
-      setState(() {
-        newImage = imageFile;
-      });
-      StorageMethod().updateProfilePhoto(newImage!);
-    }
-  }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -168,6 +158,16 @@ class _EditProfileState extends State<EditProfile> {
         ],
       ),
     );
+  }
+
+  void changeProfilePhoto() async {
+    final imageFile = await getImageFromGallery();
+    if (imageFile != null) {
+      setState(() {
+        newImage = imageFile;
+      });
+      StorageMethod().updateProfilePhoto(newImage!, imageUrl);
+    }
   }
 
   Future getData() async {
