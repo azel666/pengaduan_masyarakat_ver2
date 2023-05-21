@@ -139,7 +139,7 @@ class _EditProfileState extends State<EditProfile> {
                 ElevatedButton.icon(
                   onPressed: () async {
                     await FirestoreMethod()
-                        .updateUser(uid, uName.text, uEmail.text, uPhone.text);
+                        .updateData(uid, uName.text, uEmail.text, uPhone.text);
                     showUpdateDataSuccessDialog();
                   },
                   icon: Icon(Icons.save),

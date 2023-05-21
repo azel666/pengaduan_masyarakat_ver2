@@ -1,20 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pengaduan_masyarakat_ver2/resource/firestore_method.dart';
-import 'package:pengaduan_masyarakat_ver2/shared/my_color.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
-class FeedbackDetail extends StatefulWidget {
+class HistoryDetail extends StatefulWidget {
   final detail;
-  const FeedbackDetail({required this.detail, super.key});
+  const HistoryDetail({this.detail, super.key});
 
   @override
-  State<FeedbackDetail> createState() => _FeedbackDetailState();
+  State<HistoryDetail> createState() => _HistoryDetailState();
 }
 
-class _FeedbackDetailState extends State<FeedbackDetail> {
+class _HistoryDetailState extends State<HistoryDetail> {
   String aduanid = "";
   String imageUrl = "";
 
@@ -42,18 +40,16 @@ class _FeedbackDetailState extends State<FeedbackDetail> {
                   Get.back();
                 }
               },
-              icon: widget.detail['progress3'] == false
-                  ? Container()
-                  : Icon(
-                      Icons.delete,
-                      color: Color(0xFF2E4053),
-                    ),
+              icon: Icon(
+                Icons.delete,
+                color: Color(0xFF2E4053),
+              ),
             )
           ],
           // backgroundColor: "#2E4053".toColor(),
           backgroundColor: Colors.white,
           title: const Text(
-            'Feed Detail',
+            'History Detail',
             style: TextStyle(
               fontSize: 25,
               fontFamily: 'Poppins',
@@ -296,12 +292,12 @@ class _FeedbackDetailState extends State<FeedbackDetail> {
   }
 
   void deleteAduan() async {
-    await FirestoreMethod().deleteData(aduanid);
+    await FirestoreMethod().deleteDataHistory(imageUrl, aduanid);
   }
 
   void getData() async {
     await FirebaseFirestore.instance
-        .collection('aduan')
+        .collection('history_aduan')
         .doc(widget.detail['aduanid'])
         .get()
         .then((snap) {

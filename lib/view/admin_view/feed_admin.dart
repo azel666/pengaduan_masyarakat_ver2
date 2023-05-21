@@ -85,6 +85,9 @@ class _FeedAdminState extends State<FeedAdmin> {
           ),
           actions: <Widget>[
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
+              ),
               child: const Text(
                 'Ya',
                 style: TextStyle(
@@ -99,6 +102,9 @@ class _FeedAdminState extends State<FeedAdmin> {
               },
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
+              ),
               child: const Text(
                 'Tidak',
                 style: TextStyle(

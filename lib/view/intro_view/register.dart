@@ -61,24 +61,42 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   controller: userNameCon,
                   decoration: InputDecoration(
-                      label: Text('Nama akun',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                          )),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30))),
+                    label: Text('Nama akun',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                        )),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "masukkan nama akun";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
               ),
               Container(
                 child: TextFormField(
                   controller: emailCon,
                   decoration: InputDecoration(
-                      label: Text('Email',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                          )),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30))),
+                    label: Text('Email',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                        )),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "masukkan email";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
               ),
               Container(
@@ -87,12 +105,22 @@ class _RegisterState extends State<Register> {
                   keyboardType: TextInputType.numberWithOptions(),
                   maxLength: 13,
                   decoration: InputDecoration(
-                      label: Text('Nomor Telepon',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                          )),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30))),
+                    label: Text('Nomor Telepon',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                        )),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty ||
+                        !RegExp(r'^[0-9]{13}$').hasMatch(value)) {
+                      return "masukkan nomor telepon yang benar";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
               ),
               Container(
@@ -106,6 +134,7 @@ class _RegisterState extends State<Register> {
                           )),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30))),
+                  validator: _requeiredConfirmValidator,
                 ),
               ),
               Container(

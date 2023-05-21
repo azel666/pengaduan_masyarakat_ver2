@@ -41,7 +41,7 @@ class FirestoreMethod {
   }
 
   //update user
-  Future<void> updateUser(
+  Future<void> updateData(
     String userid,
     String username,
     String email,
@@ -60,10 +60,36 @@ class FirestoreMethod {
     }
   }
 
-  //delete data aduan firestore storage
-  Future<void> deleteData(String imageUrl, String aduanid) async {
+  //delete data aduan firestore
+  Future<void> deleteData(String aduanid) async {
+    final CollectionReference aduanRef = _firestore.collection('aduan');
+    final CollectionReference riwayatRef =
+        _firestore.collection('history_aduan');
+    DocumentSnapshot aduanSnapshot = await aduanRef.doc(aduanid).get();
+
     try {
-      FirebaseFirestore.instance.collection('aduan').doc(aduanid).delete();
+      if (aduanSnapshot.exists) {
+        final aduanData = aduanSnapshot.data();
+
+        await riwayatRef.doc(aduanid).set(aduanData);
+        await aduanRef.doc(aduanid).delete();
+      }
+
+      // Reference ref = FirebaseStorage.instance.refFromURL(imageUrl);
+      // ref.delete();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //delete data history aduan firestore storage
+  Future<void> deleteDataHistory(String imageUrl, String aduanid) async {
+    final CollectionReference historyRef =
+        _firestore.collection('history_aduan');
+
+    try {
+      await historyRef.doc(aduanid).delete();
+
       Reference ref = FirebaseStorage.instance.refFromURL(imageUrl);
       ref.delete();
     } catch (e) {
@@ -91,5 +117,30 @@ class FirestoreMethod {
         .collection("aduan")
         .doc(aduanid)
         .update({'progress3': progress3});
+  }
+
+  //admin edit user
+  Future<void> updateRoleFromAdmin(
+    String userid,
+    String role,
+  ) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(userid).update({
+        "role": role,
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //admin delete user
+  Future<void> deleteDataFromAdmin(String imageUrl, String userid) async {
+    try {
+      FirebaseFirestore.instance.collection('users').doc(userid).delete();
+      Reference ref = FirebaseStorage.instance.refFromURL(imageUrl);
+      ref.delete();
+    } catch (e) {
+      print(e);
+    }
   }
 }

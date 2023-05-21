@@ -95,7 +95,7 @@ class _DashboardUserState extends State<DashboardUser> {
                       _updated_index(2);
                     },
                     icon: Icon(
-                      Icons.help_center,
+                      Icons.history,
                       color: _selected_index == 2
                           ? Colors.white
                           : "#99A3A4".toColor(),

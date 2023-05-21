@@ -179,13 +179,13 @@ class _LoginState extends State<Login> {
           _isLoading = false;
         });
       } else {
+        loginFailed();
         setState(() {
           _isLoading = false;
         });
       }
     } on FirebaseException catch (e) {
       print(e.message);
-      loginFailed();
     }
   }
 
@@ -230,6 +230,9 @@ class _LoginState extends State<Login> {
           ),
           actions: <Widget>[
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
+              ),
               child: Text(
                 'OK',
                 style: TextStyle(

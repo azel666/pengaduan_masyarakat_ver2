@@ -1,31 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pengaduan_masyarakat_ver2/view/admin_view/dashboard_admin.dart';
+import 'package:pengaduan_masyarakat_ver2/resource/firestore_method.dart';
+import 'package:pengaduan_masyarakat_ver2/view/admin_view/data_users.dart';
 
-import 'package:pengaduan_masyarakat_ver2/view/intro_view/login.dart';
-import 'package:pengaduan_masyarakat_ver2/view/user_view/edit_profile.dart';
-
-class ProfileUser extends StatefulWidget {
-  const ProfileUser({super.key});
+class DataUserDetail extends StatefulWidget {
+  final detail;
+  const DataUserDetail({required this.detail, super.key});
 
   @override
-  State<ProfileUser> createState() => _ProfileUserState();
+  State<DataUserDetail> createState() => _DataUserDetailState();
 }
 
-class _ProfileUserState extends State<ProfileUser> {
-  String? uName = "";
-  String? uEmail = "";
-  String? uPhone = "";
-  String uImage = "";
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
+class _DataUserDetailState extends State<DataUserDetail> {
   @override
   Widget build(BuildContext context) {
     var appBarHeight = AppBar().preferredSize.height;
@@ -35,14 +21,15 @@ class _ProfileUserState extends State<ProfileUser> {
           // backgroundColor: "#2E4053".toColor(),
           backgroundColor: Colors.white,
           title: const Text(
-            'Profile',
+            'Detail User',
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 20,
               fontFamily: 'Poppins',
               color: Color(0xFF2E4053),
               fontWeight: FontWeight.bold,
             ),
           ),
+          iconTheme: IconThemeData(color: Color(0xFF2E4053)),
           actions: [
             PopupMenuButton<String>(
               offset: Offset(0.0, appBarHeight),
@@ -54,18 +41,17 @@ class _ProfileUserState extends State<ProfileUser> {
                   topRight: Radius.circular(8.0),
                 ),
               ),
-              onSelected: (value) {
-                if (value == 'edit_profile') {
-                  Get.to(EditProfile());
-                } else if (value == 'logout') {
-                  logout();
+              onSelected: (value) async {
+                if (value == 'edit_role') {
+                } else if (value == 'delete_profile') {
+                  showDelete();
                 }
               },
 
               itemBuilder: (BuildContext context) {
                 return [
                   const PopupMenuItem<String>(
-                      value: 'edit_profile',
+                      value: 'edit_role',
                       child: Row(
                         children: [
                           Icon(
@@ -76,24 +62,24 @@ class _ProfileUserState extends State<ProfileUser> {
                             width: 10,
                           ),
                           Text(
-                            'Edit Profile',
+                            'Edit Role',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
                       )),
                   const PopupMenuItem<String>(
-                      value: 'logout',
+                      value: 'delete_profile',
                       child: Row(
                         children: [
                           Icon(
-                            Icons.logout,
+                            Icons.delete,
                             color: Colors.black54,
                           ),
                           SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'Logout',
+                            'Delete Profile',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
@@ -120,9 +106,9 @@ class _ProfileUserState extends State<ProfileUser> {
           CircleAvatar(
               radius: 70.0,
               backgroundColor: Colors.grey,
-              backgroundImage: uImage == ""
+              backgroundImage: widget.detail['imageUrl'] == ""
                   ? AssetImage('assets/images/default_user.png')
-                  : Image.network(uImage).image),
+                  : Image.network(widget.detail['imageUrl']).image),
           Container(
             padding: const EdgeInsets.only(
               top: 50,
@@ -147,7 +133,7 @@ class _ProfileUserState extends State<ProfileUser> {
                           width: 20,
                         ),
                         Text(
-                          uName!,
+                          widget.detail['username'],
                           style: const TextStyle(
                             color: Colors.black,
                             fontFamily: 'Poppins',
@@ -182,7 +168,7 @@ class _ProfileUserState extends State<ProfileUser> {
                             width: 20,
                           ),
                           Text(
-                            uEmail!,
+                            widget.detail['email'],
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18,
@@ -218,7 +204,79 @@ class _ProfileUserState extends State<ProfileUser> {
                             width: 20,
                           ),
                           Text(
-                            uPhone!,
+                            widget.detail['noTelp'],
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Divider(
+                        thickness: 1,
+                        color: Colors.black26,
+                        height: 1,
+                        indent: 45,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.done,
+                            color: Color(0xFF2E4053),
+                            size: 30,
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            widget.detail['createdAt'],
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Divider(
+                        thickness: 1,
+                        color: Colors.black26,
+                        height: 1,
+                        indent: 45,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.people_outline,
+                            color: Color(0xFF2E4053),
+                            size: 30,
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            widget.detail['role'],
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 17,
@@ -247,37 +305,20 @@ class _ProfileUserState extends State<ProfileUser> {
     );
   }
 
-  Future<void> getData() async {
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((snapshot) async {
-      if (snapshot.exists) {
-        setState(() {
-          uName = snapshot.data()!['username'];
-          uEmail = snapshot.data()!['email'];
-          uPhone = snapshot.data()!['noTelp'];
-          uImage = snapshot.data()!['imageUrl'];
-        });
-      }
-    });
-  }
-
-  void logout() {
+  void showDelete() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
-            'Logout',
+            'Delete data',
             style: TextStyle(
               fontFamily: 'Poppins',
               fontWeight: FontWeight.bold,
             ),
           ),
           content: const Text(
-            'Apakah anda ingin keluar?',
+            'Apakah anda ingin menghapus data ini?',
             style: TextStyle(
               fontFamily: 'Poppins',
               fontWeight: FontWeight.bold,
@@ -295,10 +336,12 @@ class _ProfileUserState extends State<ProfileUser> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Get.deleteAll();
-                Get.offAll(const Login());
+              onPressed: () async {
+                await FirestoreMethod().deleteDataFromAdmin(
+                  widget.detail['imageUrl'],
+                  widget.detail['userid'],
+                );
+                Get.back();
               },
             ),
             ElevatedButton(

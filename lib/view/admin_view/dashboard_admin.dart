@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pengaduan_masyarakat_ver2/shared/my_color.dart';
+import 'package:pengaduan_masyarakat_ver2/view/admin_view/data_users.dart';
 import 'package:pengaduan_masyarakat_ver2/view/admin_view/feed_admin.dart';
+import 'package:pengaduan_masyarakat_ver2/view/admin_view/history_aduan.dart';
 
 class DashboardAdmin extends StatefulWidget {
   const DashboardAdmin({super.key});
@@ -30,8 +32,8 @@ class _DashboardAdminState extends State<DashboardAdmin> {
 
   final pages = [
     const FeedAdmin(),
-    Text('1112222222'),
-    Text('1133333333'),
+    const HistoryAduan(),
+    const DataUsers(),
   ];
 
   @override
@@ -60,7 +62,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                       _updated_index(0);
                     },
                     icon: Icon(
-                      Icons.home,
+                      Icons.verified,
                       color: _selected_index == 0
                           ? Colors.white
                           : "#99A3A4".toColor(),
@@ -76,7 +78,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                       _updated_index(1);
                     },
                     icon: Icon(
-                      Icons.feedback,
+                      Icons.history,
                       color: _selected_index == 1
                           ? Colors.white
                           : "#99A3A4".toColor(),
@@ -93,7 +95,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                       _updated_index(2);
                     },
                     icon: Icon(
-                      Icons.person,
+                      Icons.assignment_ind,
                       color: _selected_index == 2
                           ? Colors.white
                           : "#99A3A4".toColor(),
