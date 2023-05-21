@@ -52,7 +52,7 @@ class _LoginState extends State<Login> {
                 Container(
                   child: Image.asset(
                     'assets/images/logo.png',
-                    height: 60,
+                    height: 50,
                   ),
                 ),
                 Container(

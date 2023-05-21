@@ -16,6 +16,7 @@ class _DataUserDetailState extends State<DataUserDetail> {
   Widget build(BuildContext context) {
     var appBarHeight = AppBar().preferredSize.height;
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
           // backgroundColor: "#2E4053".toColor(),
@@ -43,6 +44,7 @@ class _DataUserDetailState extends State<DataUserDetail> {
               ),
               onSelected: (value) async {
                 if (value == 'edit_role') {
+                  editRole();
                 } else if (value == 'delete_profile') {
                   showDelete();
                 }
@@ -356,6 +358,43 @@ class _DataUserDetailState extends State<DataUserDetail> {
                 ),
               ),
               onPressed: () {
+                Get.back();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void editRole() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Edit Role'),
+          content: TextFormField(
+            maxLength: 50,
+            decoration: InputDecoration(
+              labelText: 'Masukkan Role',
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              child: Text('Batal'),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+            ElevatedButton(
+              child: Text('Simpan'),
+              onPressed: () async {
+                // final ref = await FirebaseFirestore.instance
+                //     .collection('aduan')
+                //     .where('image')
+                //     .get()
+                //     .then((value) => addData());
+
                 Get.back();
               },
             ),
