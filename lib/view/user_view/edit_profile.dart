@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pengaduan_masyarakat_ver2/resource/firestore_method.dart';
 import 'package:pengaduan_masyarakat_ver2/resource/storage_method.dart';
 import 'package:pengaduan_masyarakat_ver2/utils/utils.dart';
+import 'package:pengaduan_masyarakat_ver2/view/admin_view/dashboard_admin.dart';
 import 'package:pengaduan_masyarakat_ver2/view/user_view/profile_user.dart';
 
 class EditProfile extends StatefulWidget {
@@ -66,12 +67,16 @@ class _EditProfileState extends State<EditProfile> {
       padding: const EdgeInsets.only(right: 20, left: 20, top: 40),
       child: Column(
         children: [
-          CircleAvatar(
-              radius: 70.0,
-              backgroundColor: Colors.grey,
-              backgroundImage: imageUrl == ""
-                  ? AssetImage('assets/images/default_user.png')
-                  : Image.network(imageUrl).image),
+          newImage != null
+              ? CircleAvatar(
+                  radius: 70.0,
+                  backgroundColor: Colors.grey,
+                  backgroundImage: FileImage(newImage!))
+              : CircleAvatar(
+                  radius: 70.0,
+                  backgroundColor: Colors.grey,
+                  backgroundImage:
+                      AssetImage('assets/images/default_user.png')),
           ElevatedButton(
             onPressed: () async {
               // final ImagePicker _picker = ImagePicker();
@@ -219,7 +224,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
               onPressed: () {
-                Get.offAll(ProfileUser());
+                Get.back();
               },
             ),
           ],

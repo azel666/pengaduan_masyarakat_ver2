@@ -152,9 +152,18 @@ class _VerificationAdminState extends State<VerificationAdmin> {
                               child: Checkbox(
                                 activeColor: Colors.green,
                                 value: progress1,
-                                onChanged: (bool? value) {
+                                onChanged: (value) {
                                   setState(() {
                                     progress1 = value!;
+                                    if (!value) {
+                                      progress2 = false;
+                                      progress3 = false;
+                                      FirestoreMethod().addCheckProgess2(
+                                          widget.detail['aduanid'], progress2);
+
+                                      FirestoreMethod().addCheckProgess3(
+                                          widget.detail['aduanid'], progress3);
+                                    }
                                   });
                                   FirestoreMethod().addCheckProgess1(
                                       widget.detail['aduanid'], progress1);
@@ -183,6 +192,13 @@ class _VerificationAdminState extends State<VerificationAdmin> {
                                       ? (bool? value) {
                                           setState(() {
                                             progress2 = value!;
+                                            if (!value) {
+                                              progress3 = false;
+                                              FirestoreMethod()
+                                                  .addCheckProgess3(
+                                                      widget.detail['aduanid'],
+                                                      progress3);
+                                            }
                                           });
                                           FirestoreMethod().addCheckProgess2(
                                               widget.detail['aduanid'],
@@ -210,9 +226,12 @@ class _VerificationAdminState extends State<VerificationAdmin> {
                                   activeColor: Colors.green,
                                   value: progress3,
                                   onChanged: progress1 && progress2
-                                      ? (bool? value) {
+                                      ? (bool? value) async {
                                           setState(() {
                                             progress3 = value!;
+                                            if (!value) {
+                                              progress3 = false;
+                                            }
                                           });
                                           FirestoreMethod().addCheckProgess3(
                                               widget.detail['aduanid'],
