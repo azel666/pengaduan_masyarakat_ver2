@@ -21,6 +21,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
+  final _firestore = FirebaseFirestore.instance;
   TextEditingController uName = TextEditingController();
   TextEditingController uEmail = TextEditingController();
   TextEditingController uPhone = TextEditingController();
@@ -60,109 +61,121 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Widget content() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: Colors.white,
-      padding: const EdgeInsets.only(right: 20, left: 20, top: 40),
-      child: Column(
-        children: [
-          newImage != null
-              ? CircleAvatar(
-                  radius: 70.0,
-                  backgroundColor: Colors.grey,
-                  backgroundImage: FileImage(newImage!))
-              : CircleAvatar(
-                  radius: 70.0,
-                  backgroundColor: Colors.grey,
-                  backgroundImage:
-                      AssetImage('assets/images/default_user.png')),
-          ElevatedButton(
-            onPressed: () async {
-              // final ImagePicker _picker = ImagePicker();
-              // XFile? img = await _picker.pickImage(source: ImageSource.gallery);
-              // if (img != null) {
-              //   setState(() {
-              //     _img = img;
-              //   });
-              // }
-              changeProfilePhoto();
-            },
-            child: Icon(Icons.camera_alt),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            height: 350,
-            padding: const EdgeInsets.only(
-              top: 50,
-              right: 20,
-              left: 20,
-            ),
-            width: double.infinity,
+    return StreamBuilder(
+        stream: _firestore.collection('users').doc(uid).snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Colors.white,
+            padding: const EdgeInsets.only(right: 20, left: 20, top: 40),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                TextFormField(
-                  controller: uName,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w300,
-                  ),
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.person_2_outlined)),
-                ),
-                TextFormField(
-                  controller: uEmail,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w300,
-                  ),
-                  decoration:
-                      InputDecoration(prefixIcon: Icon(Icons.email_outlined)),
-                ),
-                TextFormField(
-                  controller: uPhone,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w300,
-                  ),
-                  decoration:
-                      InputDecoration(prefixIcon: Icon(Icons.phone_outlined)),
-                ),
-                ElevatedButton.icon(
+                imageUrl != ""
+                    ? CircleAvatar(
+                        radius: 70.0,
+                        backgroundColor: Colors.grey,
+                        backgroundImage:
+                            Image.network(snapshot.data!.data()!['imageUrl'])
+                                .image)
+                    : CircleAvatar(
+                        radius: 70.0,
+                        backgroundColor: Colors.grey,
+                        backgroundImage:
+                            AssetImage('assets/images/default_user.png')),
+                ElevatedButton(
                   onPressed: () async {
-                    await FirestoreMethod()
-                        .updateData(uid, uName.text, uEmail.text, uPhone.text);
-                    showUpdateDataSuccessDialog();
+                    // final ImagePicker _picker = ImagePicker();
+                    // XFile? img = await _picker.pickImage(source: ImageSource.gallery);
+                    // if (img != null) {
+                    //   setState(() {
+                    //     _img = img;
+                    //   });
+                    // }
+                    changeProfilePhoto();
                   },
-                  icon: Icon(Icons.save),
+                  child: Icon(Icons.camera_alt),
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all(Color(0xFF2E4053)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                    ),
                   ),
-                  label: Text(
-                    'Simpan',
-                    style: TextStyle(fontFamily: 'Poppins'),
+                ),
+                Container(
+                  height: 350,
+                  padding: const EdgeInsets.only(
+                    top: 50,
+                    right: 20,
+                    left: 20,
                   ),
-                )
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextFormField(
+                        controller: uName,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                        ),
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.person_2_outlined)),
+                      ),
+                      TextFormField(
+                        controller: uEmail,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                        ),
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email_outlined)),
+                      ),
+                      TextFormField(
+                        controller: uPhone,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                        ),
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.phone_outlined)),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () async {
+                          await FirestoreMethod().updateData(
+                              uid, uName.text, uEmail.text, uPhone.text);
+                          showUpdateDataSuccessDialog();
+                        },
+                        icon: Icon(Icons.save),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Color(0xFF2E4053)),
+                        ),
+                        label: Text(
+                          'Simpan',
+                          style: TextStyle(fontFamily: 'Poppins'),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 
   void changeProfilePhoto() async {

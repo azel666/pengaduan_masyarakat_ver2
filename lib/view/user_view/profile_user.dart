@@ -15,6 +15,8 @@ class ProfileUser extends StatefulWidget {
 }
 
 class _ProfileUserState extends State<ProfileUser> {
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  final _firestore = FirebaseFirestore.instance;
   String? uName = "";
   String? uEmail = "";
   String? uPhone = "";
@@ -110,141 +112,151 @@ class _ProfileUserState extends State<ProfileUser> {
   }
 
   Widget content() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: Colors.white,
-      padding: const EdgeInsets.only(right: 20, left: 20, top: 40),
-      child: Column(
-        children: [
-          CircleAvatar(
-              radius: 70.0,
-              backgroundColor: Colors.grey,
-              backgroundImage: uImage == ""
-                  ? AssetImage('assets/images/default_user.png')
-                  : Image.network(uImage).image),
-          Container(
-            padding: const EdgeInsets.only(
-              top: 50,
-              right: 20,
-              left: 20,
-            ),
-            width: double.infinity,
+    return StreamBuilder(
+        stream: _firestore.collection('users').doc(uid).snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Colors.white,
+            padding: const EdgeInsets.only(right: 20, left: 20, top: 40),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                CircleAvatar(
+                    radius: 70.0,
+                    backgroundColor: Colors.grey,
+                    backgroundImage: uImage == ""
+                        ? AssetImage('assets/images/default_user.png')
+                        : Image.network(snapshot.data!.data()!['imageUrl'])
+                            .image),
                 Container(
-                    child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.person_outline,
-                          color: Color(0xFF2E4053),
-                          size: 30,
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          uName!,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Divider(
-                      thickness: 1,
-                      color: Colors.black26,
-                      height: 1,
-                      indent: 45,
-                    ),
-                  ],
-                )),
-                Container(
-                  padding: const EdgeInsets.only(top: 40),
+                  padding: const EdgeInsets.only(
+                    top: 50,
+                    right: 20,
+                    left: 20,
+                  ),
+                  width: double.infinity,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Row(
+                      Container(
+                          child: Column(
                         children: [
-                          const Icon(
-                            Icons.email_outlined,
-                            color: Color(0xFF2E4053),
-                            size: 30,
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.person_outline,
+                                color: Color(0xFF2E4053),
+                                size: 30,
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                snapshot.data!.data()!['username'],
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Poppins',
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(
-                            width: 20,
+                            height: 5,
                           ),
-                          Text(
-                            uEmail!,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontFamily: 'Poppins',
-                            ),
+                          const Divider(
+                            thickness: 1,
+                            color: Colors.black26,
+                            height: 1,
+                            indent: 45,
                           ),
                         ],
+                      )),
+                      Container(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.email_outlined,
+                                  color: Color(0xFF2E4053),
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  snapshot.data!.data()!['email'],
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            const Divider(
+                              thickness: 1,
+                              color: Colors.black26,
+                              height: 1,
+                              indent: 45,
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Divider(
-                        thickness: 1,
-                        color: Colors.black26,
-                        height: 1,
-                        indent: 45,
-                      ),
+                      Container(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.phone_outlined,
+                                  color: Color(0xFF2E4053),
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  snapshot.data!.data()!['noTelp'],
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 17,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            const Divider(
+                              thickness: 1,
+                              color: Colors.black26,
+                              height: 1,
+                              indent: 45,
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.phone_outlined,
-                            color: Color(0xFF2E4053),
-                            size: 30,
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            uPhone!,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 17,
-                              fontFamily: 'Poppins',
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Divider(
-                        thickness: 1,
-                        color: Colors.black26,
-                        height: 1,
-                        indent: 45,
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 
   Future<void> getData() async {
