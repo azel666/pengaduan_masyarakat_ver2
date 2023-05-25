@@ -27,7 +27,7 @@ class _DataUsersState extends State<DataUsers> {
         title: const Text(
           'Data User',
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 22,
             fontFamily: 'Poppins',
             color: Color(0xFF2E4053),
             fontWeight: FontWeight.bold,

@@ -30,7 +30,7 @@ class _HistoryUserState extends State<HistoryUser> {
         title: const Text(
           'History',
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 22,
             fontFamily: 'Poppins',
             color: Color(0xFF2E4053),
             fontWeight: FontWeight.bold,

@@ -31,6 +31,8 @@ class _EditProfileState extends State<EditProfile> {
 
   File? newImage;
 
+  String username = "";
+
   @override
   void initState() {
     // TODO: implement initState
@@ -157,6 +159,7 @@ class _EditProfileState extends State<EditProfile> {
                         onPressed: () async {
                           await FirestoreMethod().updateData(
                               uid, uName.text, uEmail.text, uPhone.text);
+                          await FirestoreMethod().updateUsername(uName.text);
                           showUpdateDataSuccessDialog();
                         },
                         icon: Icon(Icons.save),

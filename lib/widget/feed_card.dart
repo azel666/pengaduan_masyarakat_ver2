@@ -53,19 +53,23 @@ class _FeedCardState extends State<FeedCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 10),
-                      height: 23,
-                      width: double.infinity,
-                      child: Text(
-                        "${(widget.listAllDocument[index].data() as Map<String, dynamic>)["username"]}",
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
+                    StreamBuilder(
+                        stream: null,
+                        builder: (context, snapshot) {
+                          return Container(
+                            padding: EdgeInsets.only(left: 10),
+                            height: 23,
+                            width: double.infinity,
+                            child: Text(
+                              "${(widget.listAllDocument[index].data() as Map<String, dynamic>)["username"]}",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          );
+                        }),
                     Container(
                       height: 220,
                       width: double.infinity,

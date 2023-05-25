@@ -42,13 +42,17 @@ class _FeedDetailState extends State<FeedDetail> {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 10, bottom: 5),
-            child: Text(
-              widget.detail['username'],
-              style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
-            ),
+            child: StreamBuilder(
+                stream: null,
+                builder: (context, snapshot) {
+                  return Text(
+                    widget.detail['username'],
+                    style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  );
+                }),
           ),
           Container(
             width: MediaQuery.of(context).size.width,

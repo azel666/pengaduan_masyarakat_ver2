@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreMethod {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final uid = FirebaseAuth.instance.currentUser!.uid;
   //add data aduan ke firestore
   Future<String> addAduan(
       String judul,
@@ -49,12 +50,33 @@ class FirestoreMethod {
   ) async {
     final user = FirebaseAuth.instance.currentUser;
     try {
-      await FirebaseFirestore.instance.collection('users').doc(userid).update({
+      await _firestore.collection('users').doc(userid).update({
         "username": username,
         "email": email,
         "noTelp": noTelp,
       });
       await user!.updateEmail(email);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //update username for user
+  Future<void> updateUsername(
+    // String aduanid,
+    String username,
+  ) async {
+    final snap = await _firestore
+        .collection('aduan')
+        .where('userid', isEqualTo: uid)
+        .get();
+    try {
+      snap.docs.forEach((doc) {
+        _firestore
+            .collection('aduan')
+            .doc(doc.id)
+            .update({'username': username});
+      });
     } catch (e) {
       print(e);
     }
@@ -99,21 +121,21 @@ class FirestoreMethod {
 
   //admin verfication
   Future<void> addCheckProgess1(String aduanid, bool progress1) async {
-    await FirebaseFirestore.instance
+    await _firestore
         .collection("aduan")
         .doc(aduanid)
         .update({'progress1': progress1});
   }
 
   Future<void> addCheckProgess2(String aduanid, bool progress2) async {
-    await FirebaseFirestore.instance
+    await _firestore
         .collection("aduan")
         .doc(aduanid)
         .update({'progress2': progress2});
   }
 
   Future<void> addCheckProgess3(String aduanid, bool progress3) async {
-    await FirebaseFirestore.instance
+    await _firestore
         .collection("aduan")
         .doc(aduanid)
         .update({'progress3': progress3});
@@ -125,7 +147,7 @@ class FirestoreMethod {
     String role,
   ) async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc(userid).update({
+      await _firestore.collection('users').doc(userid).update({
         "role": role,
       });
     } catch (e) {
@@ -136,7 +158,7 @@ class FirestoreMethod {
   //admin delete user
   Future<void> deleteDataFromAdmin(String imageUrl, String userid) async {
     try {
-      FirebaseFirestore.instance.collection('users').doc(userid).delete();
+      _firestore.collection('users').doc(userid).delete();
       Reference ref = FirebaseStorage.instance.refFromURL(imageUrl);
       ref.delete();
     } catch (e) {

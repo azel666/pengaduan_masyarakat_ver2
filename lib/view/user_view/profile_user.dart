@@ -39,7 +39,7 @@ class _ProfileUserState extends State<ProfileUser> {
           title: const Text(
             'Profile',
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 22,
               fontFamily: 'Poppins',
               color: Color(0xFF2E4053),
               fontWeight: FontWeight.bold,
@@ -132,8 +132,9 @@ class _ProfileUserState extends State<ProfileUser> {
                     backgroundColor: Colors.grey,
                     backgroundImage: uImage == ""
                         ? AssetImage('assets/images/default_user.png')
-                        : Image.network(snapshot.data!.data()!['imageUrl'])
-                            .image),
+                        : Image.network(
+                            snapshot.data!.data()!['imageUrl'],
+                          ).image),
                 Container(
                   padding: const EdgeInsets.only(
                     top: 50,

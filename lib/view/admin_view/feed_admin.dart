@@ -30,7 +30,7 @@ class _FeedAdminState extends State<FeedAdmin> {
         title: const Text(
           'Dashboard Admin',
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 22,
             fontFamily: 'Poppins',
             color: Color(0xFF2E4053),
             fontWeight: FontWeight.bold,

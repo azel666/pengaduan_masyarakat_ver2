@@ -37,6 +37,7 @@ class _DashboardUserState extends State<DashboardUser> {
     return WillPopScope(
       onWillPop: onBackPressed,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         extendBody: true,
         bottomNavigationBar: SafeArea(
           minimum: EdgeInsets.only(bottom: 8),

@@ -45,7 +45,7 @@ class _DataUserDetailState extends State<DataUserDetail> {
               onSelected: (value) async {
                 if (value == 'edit_role') {
                   editRole();
-                } else if (value == 'delete_profile') {
+                } else if (value == 'delete_user') {
                   showDelete();
                 }
               },
@@ -70,7 +70,7 @@ class _DataUserDetailState extends State<DataUserDetail> {
                         ],
                       )),
                   const PopupMenuItem<String>(
-                      value: 'delete_profile',
+                      value: 'delete_user',
                       child: Row(
                         children: [
                           Icon(
@@ -81,7 +81,7 @@ class _DataUserDetailState extends State<DataUserDetail> {
                             width: 10,
                           ),
                           Text(
-                            'Delete Profile',
+                            'Delete User',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                         ],
@@ -389,12 +389,6 @@ class _DataUserDetailState extends State<DataUserDetail> {
             ElevatedButton(
               child: Text('Simpan'),
               onPressed: () async {
-                // final ref = await FirebaseFirestore.instance
-                //     .collection('aduan')
-                //     .where('image')
-                //     .get()
-                //     .then((value) => addData());
-
                 Get.back();
               },
             ),

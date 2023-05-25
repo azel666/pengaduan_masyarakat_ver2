@@ -27,7 +27,7 @@ class _HistoryAduanState extends State<HistoryAduan> {
         title: const Text(
           'History',
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 22,
             fontFamily: 'Poppins',
             color: Color(0xFF2E4053),
             fontWeight: FontWeight.bold,
