@@ -6,7 +6,7 @@ class User {
   String email;
   String noTelp;
   String role;
-  String createdAt;
+  DateTime createdAt;
   String imageUrl;
 
   User(

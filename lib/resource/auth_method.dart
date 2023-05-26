@@ -26,9 +26,9 @@ class AuthMethod {
     String res = 'Some error occurred';
 
     try {
-      DateTime dateTime = DateTime.now();
+      // DateTime dateTime = DateTime.now();
 
-      String formattedDate = DateFormat('dd MMMM yyyy').format(dateTime);
+      // String formattedDate = DateFormat('dd MMMM yyyy').format(dateTime);
       if (username.isNotEmpty &&
           email.isNotEmpty &&
           password.isNotEmpty &&
@@ -47,7 +47,7 @@ class AuthMethod {
             email: email,
             noTelp: noTelp,
             role: "user",
-            createdAt: formattedDate,
+            createdAt: DateTime.now(),
             imageUrl: "");
         _firestore.collection('users').doc(uid).set(user.toJson());
 

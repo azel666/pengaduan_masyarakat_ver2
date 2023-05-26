@@ -51,7 +51,6 @@ class _HistoryDetailState extends State<HistoryDetail> {
           title: const Text(
             'History Detail',
             style: TextStyle(
-              fontSize: 25,
               fontFamily: 'Poppins',
               color: Color(0xFF2E4053),
               fontWeight: FontWeight.bold,

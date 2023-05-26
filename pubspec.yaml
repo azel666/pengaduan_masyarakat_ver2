@@ -49,6 +49,7 @@ dependencies:
   uuid:
   provider:
   pull_to_refresh:
+  http:
   
 
 dev_dependencies:

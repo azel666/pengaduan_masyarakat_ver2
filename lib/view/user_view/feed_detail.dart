@@ -21,7 +21,6 @@ class _FeedDetailState extends State<FeedDetail> {
           title: const Text(
             'Feed Detail',
             style: TextStyle(
-              fontSize: 25,
               fontFamily: 'Poppins',
               color: Color(0xFF2E4053),
               fontWeight: FontWeight.bold,

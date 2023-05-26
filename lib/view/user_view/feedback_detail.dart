@@ -53,9 +53,8 @@ class _FeedbackDetailState extends State<FeedbackDetail> {
           // backgroundColor: "#2E4053".toColor(),
           backgroundColor: Colors.white,
           title: const Text(
-            'Feed Detail',
+            'Feedback Detail',
             style: TextStyle(
-              fontSize: 25,
               fontFamily: 'Poppins',
               color: Color(0xFF2E4053),
               fontWeight: FontWeight.bold,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pengaduan_masyarakat_ver2/resource/firestore_method.dart';
 import 'package:pengaduan_masyarakat_ver2/view/admin_view/data_users.dart';
 
@@ -12,6 +13,15 @@ class DataUserDetail extends StatefulWidget {
 }
 
 class _DataUserDetailState extends State<DataUserDetail> {
+  TextEditingController role = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    roleChanges();
+  }
+
   @override
   Widget build(BuildContext context) {
     var appBarHeight = AppBar().preferredSize.height;
@@ -242,7 +252,8 @@ class _DataUserDetailState extends State<DataUserDetail> {
                             width: 20,
                           ),
                           Text(
-                            widget.detail['createdAt'],
+                            DateFormat.yMMMd()
+                                .format(widget.detail['createdAt'].toDate()),
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 17,
@@ -367,6 +378,17 @@ class _DataUserDetailState extends State<DataUserDetail> {
     );
   }
 
+  void updateRole() async {
+    await FirestoreMethod()
+        .updateRoleFromAdmin(widget.detail['userid'], role.text);
+  }
+
+  Future<void> roleChanges() async {
+    setState(() {
+      role.text = widget.detail['role'];
+    });
+  }
+
   void editRole() {
     showDialog(
       context: context,
@@ -374,6 +396,7 @@ class _DataUserDetailState extends State<DataUserDetail> {
         return AlertDialog(
           title: Text('Edit Role'),
           content: TextFormField(
+            controller: role,
             maxLength: 50,
             decoration: InputDecoration(
               labelText: 'Masukkan Role',
@@ -381,14 +404,21 @@ class _DataUserDetailState extends State<DataUserDetail> {
           ),
           actions: [
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
+              ),
               child: Text('Batal'),
               onPressed: () {
                 Get.back();
               },
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Color(0xFF2E4053)),
+              ),
               child: Text('Simpan'),
               onPressed: () async {
+                updateRole();
                 Get.back();
               },
             ),

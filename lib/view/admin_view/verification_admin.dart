@@ -29,7 +29,7 @@ class _VerificationAdminState extends State<VerificationAdmin> {
         appBar: AppBar(
           elevation: 1,
           title: const Text(
-            'Detail Aduan',
+            'Verification',
             style: TextStyle(
               color: Color(0xFF2E4053),
               fontFamily: 'Poppins',

@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
                   child: Text(
                     'Platform Layanan Pengaduan Banjarnegara',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: 'Poppins', fontSize: 24),
+                    style: TextStyle(fontFamily: 'Poppins', fontSize: 22),
                   ),
                 ),
               ],
@@ -150,7 +150,7 @@ class _LoginState extends State<Login> {
                         child: Text(
                           'Register',
                           style: TextStyle(
-                              color: "#40E0D0".toColor(),
+                              color: "#99A3A4".toColor(),
                               fontFamily: 'Poppins'),
                         ),
                       )

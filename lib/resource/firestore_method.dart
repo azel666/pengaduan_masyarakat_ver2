@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:pengaduan_masyarakat_ver2/model/aduan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pengaduan_masyarakat_ver2/utils/delete_user_auth.dart';
 
 class FirestoreMethod {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

@@ -51,7 +51,6 @@ class _EditProfileState extends State<EditProfile> {
           title: const Text(
             'Edit Profile',
             style: TextStyle(
-              fontSize: 25,
               fontFamily: 'Poppins',
               color: Color(0xFF2E4053),
               fontWeight: FontWeight.bold,
