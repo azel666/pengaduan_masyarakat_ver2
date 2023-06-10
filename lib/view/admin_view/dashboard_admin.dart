@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pengaduan_masyarakat_ver2/shared/my_color.dart';
 import 'package:pengaduan_masyarakat_ver2/view/admin_view/data_users.dart';
 import 'package:pengaduan_masyarakat_ver2/view/admin_view/feed_admin.dart';
-import 'package:pengaduan_masyarakat_ver2/view/admin_view/history_aduan.dart';
+// import 'package:pengaduan_masyarakat_ver2/view/admin_view/history_aduan.dart';
 
 class DashboardAdmin extends StatefulWidget {
   const DashboardAdmin({super.key});
@@ -32,7 +32,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
 
   final pages = [
     const FeedAdmin(),
-    const HistoryAduan(),
+    // const HistoryAduan(),
     const DataUsers(),
   ];
 
@@ -46,12 +46,12 @@ class _DashboardAdminState extends State<DashboardAdmin> {
           minimum: EdgeInsets.only(bottom: 5),
           child: Container(
             padding: EdgeInsets.all(12),
-            margin: EdgeInsets.symmetric(horizontal: 20),
+            margin: EdgeInsets.symmetric(horizontal: 25),
             decoration: BoxDecoration(
                 color: "#2E4053".toColor().withOpacity(0.8),
                 borderRadius: BorderRadius.circular(25)),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
                   height: 40,
@@ -62,7 +62,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                       _updated_index(0);
                     },
                     icon: Icon(
-                      Icons.verified,
+                      Icons.home,
                       color: _selected_index == 0
                           ? Colors.white
                           : "#99A3A4".toColor(),
@@ -78,7 +78,7 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                       _updated_index(1);
                     },
                     icon: Icon(
-                      Icons.history,
+                      Icons.assignment_ind,
                       color: _selected_index == 1
                           ? Colors.white
                           : "#99A3A4".toColor(),
@@ -86,23 +86,23 @@ class _DashboardAdminState extends State<DashboardAdmin> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: IconButton(
-                    padding: EdgeInsets.only(left: 10),
-                    onPressed: () {
-                      _updated_index(2);
-                    },
-                    icon: Icon(
-                      Icons.assignment_ind,
-                      color: _selected_index == 2
-                          ? Colors.white
-                          : "#99A3A4".toColor(),
-                      size: 30,
-                    ),
-                  ),
-                ),
+                // SizedBox(
+                //   height: 40,
+                //   width: 40,
+                //   child: IconButton(
+                //     padding: EdgeInsets.only(left: 10),
+                //     onPressed: () {
+                //       _updated_index(2);
+                //     },
+                //     icon: Icon(
+                //       Icons.assignment_ind,
+                //       color: _selected_index == 2
+                //           ? Colors.white
+                //           : "#99A3A4".toColor(),
+                //       size: 30,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

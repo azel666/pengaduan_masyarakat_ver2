@@ -334,7 +334,6 @@ class _DataUserDetailState extends State<DataUserDetail> {
             'Apakah anda ingin menghapus data ini?',
             style: TextStyle(
               fontFamily: 'Poppins',
-              fontWeight: FontWeight.bold,
             ),
           ),
           actions: <Widget>[
@@ -397,7 +396,7 @@ class _DataUserDetailState extends State<DataUserDetail> {
           title: Text('Edit Role'),
           content: TextFormField(
             controller: role,
-            maxLength: 50,
+            maxLength: 5,
             decoration: InputDecoration(
               labelText: 'Masukkan Role',
             ),

@@ -14,7 +14,7 @@ class _DataUsersState extends State<DataUsers> {
 
   Stream<QuerySnapshot<Object?>> streamData() {
     CollectionReference data = firestore.collection("users");
-    return data.orderBy("createdAt", descending: true).snapshots();
+    return data.where('role', isEqualTo: 'user').snapshots();
   }
 
   @override
@@ -48,7 +48,7 @@ class _DataUsersState extends State<DataUsers> {
         stream: streamData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
-            var listAllDocument = snapshot.data!.docs;
+            final listAllDocument = snapshot.data!.docs;
             return DataUsersCard(
               listAllDocs: listAllDocument,
             );

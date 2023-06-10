@@ -226,7 +226,6 @@ class _EditProfileState extends State<EditProfile> {
             'Data berhasil diubah',
             style: TextStyle(
               fontFamily: 'Poppins',
-              fontWeight: FontWeight.bold,
             ),
           ),
           actions: <Widget>[

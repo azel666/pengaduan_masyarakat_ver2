@@ -302,17 +302,44 @@ class _TambahAduanState extends State<TambahAduan> {
     Reference referenceDir = referenceRoot.child('aduan');
     Reference referenceImageUpload = referenceDir.child(fileName);
     try {
+      loadingDialog();
       await referenceImageUpload.putFile(File(image.path));
       imgUrl = await referenceImageUpload.getDownloadURL();
 
       final FirebaseAuth auth = FirebaseAuth.instance;
       String uid = auth.currentUser!.uid.toString();
-      await FirestoreMethod().addAduan(judulCon.text, deskCon.text, locCon.text,
-          uName!, imgUrl, dateInput.text, uid);
-      showAddDataSuccessDialog();
+      final res = await FirestoreMethod().addAduan(judulCon.text, deskCon.text,
+          locCon.text, uName!, imgUrl, dateInput.text, uid);
+      if (res == 'Success') {
+        Navigator.of(context).pop();
+        showAddDataSuccessDialog();
+      }
     } on FirebaseException catch (e) {
       print(e.message);
     }
+  }
+
+  void loadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 20),
+              Text(
+                "upload aduan...",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   // void clearImage() {
@@ -346,7 +373,6 @@ class _TambahAduanState extends State<TambahAduan> {
             'Data berhasil ditambahkan',
             style: TextStyle(
               fontFamily: 'Poppins',
-              fontWeight: FontWeight.bold,
             ),
           ),
           actions: <Widget>[

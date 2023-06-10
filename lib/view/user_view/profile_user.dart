@@ -293,7 +293,6 @@ class _ProfileUserState extends State<ProfileUser> {
             'Apakah anda ingin keluar?',
             style: TextStyle(
               fontFamily: 'Poppins',
-              fontWeight: FontWeight.bold,
             ),
           ),
           actions: <Widget>[
